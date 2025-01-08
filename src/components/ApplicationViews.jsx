@@ -1,9 +1,10 @@
-import { Route, Routes } from "react-router-dom";
-import { AuthorizedRoute } from "./auth/AuthorizedRoute";
-import Login from "./auth/Login";
-import Register from "./auth/Register";
-import UserProfileList from "./userprofiles/UserProfilesList";
-import UserProfileDetails from "./userprofiles/UserProfileDetails";
+import { Route, Routes } from 'react-router-dom';
+import { AuthorizedRoute } from './auth/AuthorizedRoute';
+import Login from './auth/Login';
+import Register from './auth/Register';
+import UserProfileList from './userprofiles/UserProfilesList';
+import UserProfileDetails from './userprofiles/UserProfileDetails';
+import { CategoryList } from './categories/CategoryList';
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -21,7 +22,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           <Route
             index
             element={
-              <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+              <AuthorizedRoute loggedInUser={loggedInUser} roles={['Admin']}>
                 <UserProfileList />
               </AuthorizedRoute>
             }
@@ -29,12 +30,20 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           <Route
             path=":id"
             element={
-              <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+              <AuthorizedRoute loggedInUser={loggedInUser} roles={['Admin']}>
                 <UserProfileDetails />
               </AuthorizedRoute>
             }
           />
         </Route>
+        <Route
+          path="categories"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser} roles={['Admin']}>
+              <CategoryList loggedInUser={loggedInUser} />
+            </AuthorizedRoute>
+          }
+        />
         <Route
           path="login"
           element={<Login setLoggedInUser={setLoggedInUser} />}
