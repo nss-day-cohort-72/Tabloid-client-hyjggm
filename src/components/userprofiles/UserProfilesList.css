@@ -1,0 +1,8 @@
+.user-wrapper {
+  display: flex;
+  gap: 50px;
+}
+
+.user-wrapper span {
+  font-weight: bold;
+}
