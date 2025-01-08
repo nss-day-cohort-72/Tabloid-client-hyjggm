@@ -10,11 +10,16 @@ function App() {
   const [loggedInUser, setLoggedInUser] = useState();
 
   useEffect(() => {
-    // user will be null if not authenticated
+    // Log before trying to get the logged-in user
+    console.log("Fetching logged-in user...");
     tryGetLoggedInUser().then((user) => {
+      console.log("Fetched user:", user); // Log the result of the fetch
       setLoggedInUser(user);
     });
   }, []);
+
+  // Log the current state of loggedInUser
+  // console.log("Current loggedInUser state:", loggedInUser);
 
   // wait to get a definite logged-in state before rendering
   if (loggedInUser === undefined) {
