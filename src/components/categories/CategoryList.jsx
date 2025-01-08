@@ -1,20 +1,46 @@
 import { useEffect, useState } from 'react';
 import './Category.css';
-import { getAllCategories } from '../../managers/categoryManager';
+import {
+  addNewCategory,
+  getAllCategories,
+} from '../../managers/categoryManager';
 
 export const CategoryList = () => {
   const [categories, setCategories] = useState([]);
+  const [newCategory, setNewCategory] = useState({ name: '' });
+
+  const getAllCategoriesThenSetCategories = () => {
+    getAllCategories().then((data) => setCategories(data));
+  };
 
   useEffect(() => {
-    getAllCategories().then((data) => setCategories(data));
+    getAllCategoriesThenSetCategories();
   }, []);
+
+  const handleOnChange = (e) => {
+    const copyObj = { ...newCategory };
+    copyObj[e.target.name] = e.target.value;
+    setNewCategory(copyObj);
+  };
+
+  const handleAddBtnClick = () => {
+    if (newCategory.name) {
+      const categoryToAdd = { ...newCategory }; // Store the current category
+      setNewCategory({ name: '' }); // Clear input immediately
+      addNewCategory(categoryToAdd).then(() =>
+        getAllCategoriesThenSetCategories()
+      );
+    } else {
+      alert('Please enter name');
+    }
+  };
 
   return (
     <div className="category-wrapper">
       <h3>Category Management</h3>
       {categories.map((c) => {
         return (
-          <div className="category-card">
+          <div key={c.id} className="category-card">
             <div className="category-name-wrapper">
               <p>{c.name}</p>
             </div>
@@ -30,9 +56,11 @@ export const CategoryList = () => {
           type="text"
           name="name"
           id="category"
+          value={newCategory.name}
           placeholder="Add category"
+          onChange={handleOnChange}
         />
-        <button>Add</button>
+        <button onClick={handleAddBtnClick}>Add</button>
       </div>
     </div>
   );
