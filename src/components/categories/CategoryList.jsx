@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './Category.css';
 import {
   addNewCategory,
+  deleteCategory,
   getAllCategories,
 } from '../../managers/categoryManager';
 import { useNavigate } from 'react-router-dom';
@@ -42,6 +43,16 @@ export const CategoryList = () => {
     navigate(`/categories/${id}`);
   };
 
+  const handleDeleteBtnClick = (id) => {
+    const userConfirmed = window.confirm(
+      'Are you sure you want to delete this category?'
+    );
+
+    if (userConfirmed) {
+      deleteCategory(id).then(() => getAllCategoriesThenSetCategories());
+    }
+  };
+
   return (
     <div className="category-wrapper">
       <h3>Category Management</h3>
@@ -53,7 +64,7 @@ export const CategoryList = () => {
             </div>
             <div className="button-wrapper">
               <button onClick={() => handleEditBtnClick(c.id)}>Edit</button>
-              <button>Delete</button>
+              <button onClick={() => handleDeleteBtnClick(c.id)}>Delete</button>
             </div>
           </div>
         );
