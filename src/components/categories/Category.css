@@ -1,0 +1,25 @@
+.category-wrapper {
+  margin: 200px auto 0 auto;
+  width: 30%;
+}
+
+.category-wrapper h3 {
+  text-align: center;
+}
+
+.category-card {
+  border: solid black;
+  display: flex;
+  justify-content: space-between;
+}
+
+.category-name-wrapper {
+  /* border: solid yellow; */
+}
+
+.button-wrapper {
+  /* border: solid orange; */
+  display: flex;
+  width: 25%;
+  justify-content: space-around;
+}
