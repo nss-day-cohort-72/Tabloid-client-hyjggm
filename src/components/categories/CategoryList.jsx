@@ -4,10 +4,13 @@ import {
   addNewCategory,
   getAllCategories,
 } from '../../managers/categoryManager';
+import { useNavigate } from 'react-router-dom';
 
 export const CategoryList = () => {
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState({ name: '' });
+
+  const navigate = useNavigate();
 
   const getAllCategoriesThenSetCategories = () => {
     getAllCategories().then((data) => setCategories(data));
@@ -35,6 +38,10 @@ export const CategoryList = () => {
     }
   };
 
+  const handleEditBtnClick = (id) => {
+    navigate(`/categories/${id}`);
+  };
+
   return (
     <div className="category-wrapper">
       <h3>Category Management</h3>
@@ -45,7 +52,7 @@ export const CategoryList = () => {
               <p>{c.name}</p>
             </div>
             <div className="button-wrapper">
-              <button>Edit</button>
+              <button onClick={() => handleEditBtnClick(c.id)}>Edit</button>
               <button>Delete</button>
             </div>
           </div>
