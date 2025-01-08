@@ -27,3 +27,9 @@ export const editCategory = (id, categoryObj) => {
     body: JSON.stringify(categoryObj),
   });
 };
+
+export const deleteCategory = (id) => {
+  return fetch(`${_apiUrl}/${id}`, {
+    method: 'DELETE',
+  });
+};
