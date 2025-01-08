@@ -4,7 +4,7 @@ import { createPost } from "../managers/PostManager";
 import { getCategories } from "../managers/CategoryManager";
 
 export default function CreatePost({ loggedInUser }) {
-    console.log("What is loggedInUser in CreatePost:", loggedInUser);
+    // console.log("What is loggedInUser in CreatePost:", loggedInUser);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [categoryId, setCategoryId] = useState("");

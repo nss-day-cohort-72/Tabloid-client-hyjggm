@@ -23,12 +23,12 @@ export default function CategoryList() {
     return (
         <div>
             <h2>Category Management</h2>
-            <button onClick={() => navigate("/categories/new")}>Create Category</button>
+            <button onClick={() => navigate("/category/new")}>Create Category</button>
             <ul>
                 {categories.map((category) => (
                     <li key={category.id}>
                         {category.name}
-                        <button onClick={() => navigate(`/categories/edit/${category.id}`)}>Edit</button>
+                        <button onClick={() => navigate(`/category/edit/${category.id}`)}>Edit</button>
                         <button onClick={() => handleDelete(category.id)}>Delete</button>
                     </li>
                 ))}
