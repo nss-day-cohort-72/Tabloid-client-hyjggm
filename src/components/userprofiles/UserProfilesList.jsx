@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getProfiles } from '../../managers/userProfileManager';
+import {
+  deactivateUserProfile,
+  getProfiles,
+} from '../../managers/userProfileManager';
 import { Link } from 'react-router-dom';
 import './UserProfilesList.css';
 
@@ -12,6 +15,17 @@ export default function UserProfileList() {
   useEffect(() => {
     getUserProfiles();
   }, []);
+
+  const handleDeactivateBtnClick = (userId) => {
+    const userConfirmed = window.confirm(
+      'Are you sure you want to deactivate this user?'
+    );
+
+    if (userConfirmed) {
+      deactivateUserProfile(userId).then(() => getUserProfiles());
+    }
+  };
+
   return (
     <>
       <h3>User Profile List</h3>
@@ -22,6 +36,13 @@ export default function UserProfileList() {
             {p.userName} <Link to={`/userprofiles/${p.id}`}>Details</Link>
           </p>
           {p.roles.includes('Admin') && <p>[Admin]</p>}
+          {p.isDeactivated ? (
+            <button>Activate</button>
+          ) : (
+            <button onClick={() => handleDeactivateBtnClick(p.id)}>
+              Deactivate
+            </button>
+          )}
         </div>
       ))}
     </>
