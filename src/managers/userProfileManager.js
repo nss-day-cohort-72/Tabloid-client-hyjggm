@@ -43,3 +43,12 @@ export const demoteUser = (id) => {
     },
   });
 };
+
+export const uploadAvatarImage = async (id, formData) => {
+  const response = await fetch(`${_apiUrl}/${id}/upload-avatar`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  return response;
+};
