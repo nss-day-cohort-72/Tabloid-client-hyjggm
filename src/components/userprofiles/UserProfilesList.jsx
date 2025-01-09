@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
+  activateUserProfile,
   deactivateUserProfile,
   getProfiles,
 } from '../../managers/userProfileManager';
@@ -26,6 +27,10 @@ export default function UserProfileList() {
     }
   };
 
+  const handleActivateBtnClick = (userId) => {
+    activateUserProfile(userId).then(() => getUserProfiles());
+  };
+
   return (
     <>
       <h3>User Profile List</h3>
@@ -37,7 +42,9 @@ export default function UserProfileList() {
           </p>
           {p.roles.includes('Admin') && <p>[Admin]</p>}
           {p.isDeactivated ? (
-            <button>Activate</button>
+            <button onClick={() => handleActivateBtnClick(p.id)}>
+              Activate
+            </button>
           ) : (
             <button onClick={() => handleDeactivateBtnClick(p.id)}>
               Deactivate

@@ -10,7 +10,16 @@ export const getProfile = (id) => {
 
 export const deactivateUserProfile = (id) => {
   return fetch(`${_apiUrl}/deactivate/${id}`, {
-    method: 'PUT', // Specify the HTTP method
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+};
+
+export const activateUserProfile = (id) => {
+  return fetch(`${_apiUrl}/activate/${id}`, {
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
