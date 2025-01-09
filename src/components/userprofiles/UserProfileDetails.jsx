@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getProfile } from '../../managers/userProfileManager';
+import {
+  demoteUser,
+  getProfile,
+  promoteUser,
+} from '../../managers/userProfileManager';
 
 export default function UserProfileDetails() {
   const [userProfile, setUserProfile] = useState();
@@ -21,6 +25,27 @@ export default function UserProfileDetails() {
 
     return formattedDate;
   };
+
+  const handlePromoteBtnClick = () => {
+    const userConfirmed = window.confirm(
+      'Are you sure you want to promote this user?'
+    );
+
+    if (userConfirmed) {
+      promoteUser(id).then(() => getProfile(id).then(setUserProfile));
+    }
+  };
+
+  const handleDemoteBtnClick = () => {
+    const userConfirmed = window.confirm(
+      'Are you sure you want to demote this user?'
+    );
+
+    if (userConfirmed) {
+      demoteUser(id).then(() => getProfile(id).then(setUserProfile));
+    }
+  };
+
   return (
     <>
       <img src={userProfile.imageLocation} alt={userProfile.firstName} />
@@ -32,6 +57,11 @@ export default function UserProfileDetails() {
         {' '}
         Profile Type: {userProfile.roles.includes('Admin') ? 'Admin' : 'Author'}
       </p>
+      {userProfile.roles.includes('Admin') ? (
+        <button onClick={handleDemoteBtnClick}>Demote User</button>
+      ) : (
+        <button onClick={handlePromoteBtnClick}>Promote</button>
+      )}
     </>
   );
 }
