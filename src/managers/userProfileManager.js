@@ -25,3 +25,21 @@ export const activateUserProfile = (id) => {
     },
   });
 };
+
+export const promoteUser = (id) => {
+  return fetch(`${_apiUrl}/promote/${id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+};
+
+export const demoteUser = (id) => {
+  return fetch(`${_apiUrl}/demote/${id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+};
