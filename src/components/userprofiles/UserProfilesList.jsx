@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import './UserProfilesList.css';
 
 export default function UserProfileList() {
-  const [userprofiles, setUserProfiles] = useState([]);
+  const [userProfiles, setUserProfiles] = useState([]);
 
   const getUserProfiles = () => {
     getProfiles().then(setUserProfiles);
@@ -18,6 +18,16 @@ export default function UserProfileList() {
   }, []);
 
   const handleDeactivateBtnClick = (userId) => {
+    const activeAdmins = userProfiles.filter(
+      (up) => up.roles.includes('Admin') && !up.isDeactivated
+    );
+
+    if (activeAdmins.length === 1 && activeAdmins[0].id === userId) {
+      alert(
+        'You cannot deactivate the last remaining admin. Please promote another user to admin first.'
+      );
+      return;
+    }
     const userConfirmed = window.confirm(
       'Are you sure you want to deactivate this user?'
     );
@@ -34,7 +44,7 @@ export default function UserProfileList() {
   return (
     <>
       <h3>User Profile List</h3>
-      {userprofiles.map((p) => (
+      {userProfiles.map((p) => (
         <div className="user-wrapper" key={p.id}>
           <p>
             <span>Full Name:</span> {p.fullName} <span>Username:</span>{' '}

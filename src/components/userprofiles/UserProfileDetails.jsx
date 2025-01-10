@@ -4,15 +4,18 @@ import './UserProfileDetails.css';
 import {
   demoteUser,
   getProfile,
+  getProfiles,
   promoteUser,
 } from '../../managers/userProfileManager';
 import { UploadAvatar } from './UploadAvatar';
 
 export default function UserProfileDetails() {
   const [userProfile, setUserProfile] = useState();
+  const [userProfiles, setUserProfiles] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
+    getProfiles().then((data) => setUserProfiles(data));
     getProfile(id).then(setUserProfile);
   }, [id]);
   if (!userProfile) {
@@ -35,6 +38,16 @@ export default function UserProfileDetails() {
   };
 
   const handleDemoteBtnClick = () => {
+    const activeAdmins = userProfiles.filter(
+      (up) => up.roles.includes('Admin') && !up.isDeactivated
+    );
+
+    if (activeAdmins.length === 1 && activeAdmins[0].id === parseInt(id)) {
+      alert(
+        'You cannot demote the last remaining admin. Please promote another user to admin first.'
+      );
+      return;
+    }
     const userConfirmed = window.confirm(
       'Are you sure you want to demote this user?'
     );
